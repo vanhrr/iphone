@@ -39,16 +39,6 @@ const VideoCarousel = () => {
   }, [isEnd, videoId]);
 
   useEffect(() => {
-    if (loadedData.length > 3) {
-      videoRef.current[videoId].pause();
-    } else {
-      startPlay && videoRef.current[videoId].play();
-    }
-  }, [startPlay, videoId, isPlaying, loadedData]);
-
-  const handleLoadedMetaData = (i, e) => setLoadedData((prev) => [...prev, e]);
-
-  useEffect(() => {
     let currentProgress = 0;
     let span = videoSpanRef.current;
     if (span[videoId]) {
@@ -82,7 +72,7 @@ const VideoCarousel = () => {
           }
         },
       });
-      if (videoId === 0) {
+      if (videoId == 0) {
         anim.restart();
       }
       const animUpdate = () => {
@@ -93,6 +83,14 @@ const VideoCarousel = () => {
       };
     }
   }, [videoId, startPlay]);
+  const handleLoadedMetaData = (i, e) => setLoadedData((prev) => [...prev, e]);
+  useEffect(() => {
+    if (loadedData.length > 3) {
+      videoRef.current[videoId].pause();
+    } else {
+      startPlay && videoRef.current[videoId].play();
+    }
+  }, [startPlay, videoId, isPlaying, loadedData]);
   function handleProcess(type, i) {
     switch (type) {
       case "video-end":
@@ -179,7 +177,7 @@ const VideoCarousel = () => {
             alt={isLastVideo ? "replay" : !isPlaying ? "play" : "pause"}
             onClick={
               isLastVideo
-                ? () => handleProcess(video - reset)
+                ? () => handleProcess("video-reset")
                 : !isPlaying
                 ? () => handleProcess("play")
                 : () => handleProcess("pause")
