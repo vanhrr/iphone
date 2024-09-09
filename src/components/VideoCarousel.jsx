@@ -72,7 +72,7 @@ const VideoCarousel = () => {
           }
         },
       });
-      if (videoId == 0) {
+      if (videoId === 0) {
         anim.restart();
       }
       const animUpdate = () => {
@@ -83,12 +83,14 @@ const VideoCarousel = () => {
       };
     }
   }, [videoId, startPlay]);
-  const handleLoadedMetaData = (i, e) => setLoadedData((prev) => [...prev, e]);
+
   useEffect(() => {
     if (loadedData.length > 3) {
-      videoRef.current[videoId].pause();
-    } else {
-      startPlay && videoRef.current[videoId].play();
+      if (!isPlaying) {
+        videoRef.current[videoId].pause();
+      } else {
+        startPlay && videoRef.current[videoId].play();
+      }
     }
   }, [startPlay, videoId, isPlaying, loadedData]);
   function handleProcess(type, i) {
@@ -112,6 +114,7 @@ const VideoCarousel = () => {
         return video;
     }
   }
+  const handleLoadedMetaData = (i, e) => setLoadedData((prev) => [...prev, e]);
   return (
     <>
       <div className="flex items-center">
@@ -177,7 +180,7 @@ const VideoCarousel = () => {
             alt={isLastVideo ? "replay" : !isPlaying ? "play" : "pause"}
             onClick={
               isLastVideo
-                ? () => handleProcess("video-reset")
+                ? () => handleProcess("video-restart")
                 : !isPlaying
                 ? () => handleProcess("play")
                 : () => handleProcess("pause")
