@@ -81,6 +81,13 @@ const VideoCarousel = () => {
             hightlightsSlides[videoId].videoDuration
         );
       };
+      if (isPlaying) {
+        // ticker to update the progress bar
+        gsap.ticker.add(animUpdate);
+      } else {
+        // remove the ticker when the video is paused (progress bar is stopped)
+        gsap.ticker.remove(animUpdate);
+      }
     }
   }, [videoId, startPlay]);
 
@@ -180,7 +187,7 @@ const VideoCarousel = () => {
             alt={isLastVideo ? "replay" : !isPlaying ? "play" : "pause"}
             onClick={
               isLastVideo
-                ? () => handleProcess("video-restart")
+                ? () => handleProcess("video-reset")
                 : !isPlaying
                 ? () => handleProcess("play")
                 : () => handleProcess("pause")
