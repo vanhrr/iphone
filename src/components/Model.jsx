@@ -7,7 +7,10 @@ import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
 import { models, sizes } from "../constants";
-import { animateWithGsapTimeline } from "../utils/animations";
+import {
+  animateWithGsapScrollTrigger,
+  animateWithGsapTimeline,
+} from "../utils/animations";
 const Model = () => {
   const [size, setSize] = useState("small");
   const [model, setModel] = useState({
@@ -44,7 +47,8 @@ const Model = () => {
   }, [size]);
 
   useGSAP(() => {
-    gsap.to("#heading", { y: 0, opacity: 1 });
+    animateWithGsapScrollTrigger("#heading", { y: 0, opacity: 1 });
+    // gsap.to("#heading", { y: 0, opacity: 1 });
   }, []);
   return (
     <section className="common-padding">

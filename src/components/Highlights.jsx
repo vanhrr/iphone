@@ -3,10 +3,18 @@ import { rightImg, watchImg } from "../utils";
 import { useGSAP } from "@gsap/react";
 import VideoCarousel from "./VideoCarousel";
 import gsap from "gsap";
+import { animateWithGsapScrollTrigger } from "../utils/animations";
 const Highlights = () => {
   useGSAP(() => {
-    gsap.to("#title", { opacity: 1, y: 0 });
-    gsap.to(".link", { opacity: 1, y: 0, duration: 1, stagger: 0.25 });
+    animateWithGsapScrollTrigger("#title", { opacity: 1, y: 0, duration: 1 });
+    animateWithGsapScrollTrigger(".link", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      stagger: 0.25,
+    });
+    // gsap.to("#title", { opacity: 1, y: 0, duration: 1 });
+    // gsap.to(".link", { opacity: 1, y: 0, duration: 1, stagger: 0.25 });
   }, []);
   return (
     <section
